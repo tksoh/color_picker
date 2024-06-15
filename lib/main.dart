@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
 
 import 'color_picker.dart';
+import 'color_picker_dialog.dart';
+
+final themeColorList = [
+  Colors.indigo,
+  Colors.cyan,
+  Colors.teal,
+  Colors.green,
+  Colors.grey,
+  Colors.brown,
+  Colors.amber,
+  Colors.orange,
+  Colors.lime,
+  Colors.red,
+  Colors.purple,
+];
 
 void main() {
   runApp(const MyApp());
@@ -59,6 +74,24 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                await showDialog(
+                  context: context,
+                  builder: (context) => ColorPickerDialog(
+                    colors: themeColorList,
+                    initColor: screenPickerColor,
+                    onSelected: (color) {
+                      debugPrint('color selected: $color');
+                      if (color != null) screenPickerColor = color;
+                    },
+                  ),
+                );
+              },
+              child: const Text('Color Picker Dialog'),
+            ),
+            const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(
@@ -73,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   );
                 },
-                child: const Text('Pick Color')),
+                child: const Text('Pick Color Page')),
           ],
         ),
       ),
